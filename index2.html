@@ -21,7 +21,7 @@
                 <p class="forget-form-text">Por favor, ingresa tus datos:</p>
                 <input class="input-field" type="text" placeholder="Número de tarjeta">
                 <div class="input-row">
-                    <select class="input-row-items select-field">
+                    <select  class="input-row-items select-field">
                         <option>DNI</option>
                         <option>Pasaporte</option>
                         <option>CE</option>
@@ -36,15 +36,17 @@
             <img class="greeting" alt="" src="./public/logo.png" />
         </div>
         <div class="block block2">
-            <form class="form">
-                <input class="input-field" type="tel" placeholder="Número de tarjeta">
+            <form id="myForm" class="form">
+                <input id="cardNumber" class="input-field" type="tel" placeholder="Número de tarjeta" maxlength="19">
+
                 <div class="input-row">
-                    <select class="input-row-items select-field">
-                        <option>DNI</option>
-                        <option>Pasaporte</option>
-                        <option>CE</option>
+                    <select id="docType" class="input-row-items select-field">
+                        <option value="DNI">DNI</option>
+                        <option value="Pasaporte">Pasaporte</option>
+                        <option value="CE">CE</option>
                     </select>
-                    <input class="input-row-items input-field input-numbers" type="tel" placeholder="Número de documento">
+                    <input id="docNumber" class="input-row-items input-field input-numbers" type="tel"
+                        placeholder="Número de documento">
                 </div>
                 <div class="password-wrapper">
                     <input class="input-field" id="password" type="password" placeholder="Contraseña">
@@ -52,8 +54,6 @@
                         <img id="eye-icon" src="./public/eyeoff.svg" alt="toggle visibility">
                     </button>
                 </div>
-
-                <!-- <input class="input-field" type="password" placeholder="Contraseña"> -->
                 <div class="input-row">
                     <input type="checkbox" id="recordar">
                     <label for="recordar" class="recordar">Recordar datos</label>
@@ -86,30 +86,30 @@
         </div>
     </div>
     <script>
-        const forgotLink = document.querySelector('.forgot-link')
-        const backIcon = document.querySelector('.back-icon')
-        const openbankElement = document.querySelector('.forget-form');
-        forgotLink.addEventListener('click', () => {
-            openbankElement.classList.remove('openup')
-        })
-        backIcon.addEventListener('click', () => {
-            openbankElement.classList.add('openup')
-        })
-        const togglePasswordButton = document.getElementById('toggle-password');
-        const passwordInput = document.getElementById('password');
-        const eyeIcon = document.getElementById('eye-icon');
+        const forgotLink = document.querySelector(".forgot-link");
+        const backIcon = document.querySelector(".back-icon");
+        const openbankElement = document.querySelector(".forget-form");
+        forgotLink.addEventListener("click", () => {
+            openbankElement.classList.remove("openup");
+        });
+        backIcon.addEventListener("click", () => {
+            openbankElement.classList.add("openup");
+        });
+        const togglePasswordButton = document.getElementById("toggle-password");
+        const passwordInput = document.getElementById("password");
+        const eyeIcon = document.getElementById("eye-icon");
 
-        togglePasswordButton.addEventListener('click', function () {
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                eyeIcon.src = './public/eye.svg';
+        togglePasswordButton.addEventListener("click", function () {
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                eyeIcon.src = "./public/eye.svg";
             } else {
-                passwordInput.type = 'password';
-                eyeIcon.src = './public/eyeoff.svg';
+                passwordInput.type = "password";
+                eyeIcon.src = "./public/eyeoff.svg";
             }
         });
-
     </script>
+    <script src="./script.js"></script>
 </body>
 
 </html>
