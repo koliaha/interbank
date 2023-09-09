@@ -1,0 +1,23 @@
+body {
+  margin: 0;
+  line-height: normal;
+}
+
+:root {
+  /* fonts */
+  --font-karla: Karla;
+
+  /* font sizes */
+  --font-size-mini: 15px;
+  --font-size-lg: 18px;
+
+  /* Colors */
+  --colors-neutral-white: #fff;
+  --color-gray: #001533;
+  --divider-light-1px-60: rgba(228, 228, 228, 0.6);
+  --color-darkgray: rgba(153, 153, 153, 0.05);
+  --color-mediumseagreen: #00a24f;
+
+  /* Border radiuses */
+  --br-8xs: 5px;
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #00A24F;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    .logo {
+      width: 200px;
+      height: 200px;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+  </style>
+  <title>Loading...</title>
+</head>
+<body>
+  <img class="logo" src="./public/interbank-2.svg" alt="Interbank Logo">
+  <script>
+    setTimeout(function() {
+      window.location.href = 'login.html';
+    }, 2000); // Через 2 секунды переадресация на login.html
+  </script>
+</body>
+</html>
