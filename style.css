@@ -73,13 +73,17 @@ html {
 .input-field {
   width: 100%;
   margin-bottom: 0.5em;
-  font-size: 2vh;
 }
 .input-field,
 .select-field {
+  -webkit-appearance: none; /* Отключение нативной стилизации на WebKit браузерах */
+  -moz-appearance: none; /* Отключение нативной стилизации на Firefox */
+  appearance: none;
   border-radius: 5px;
   padding: 1% 5%;
   border: 1px solid #d9d9d9;
+  background: white;
+  font-size: 2vh;
 }
 /* .input-field,
 .select-field,
@@ -140,7 +144,7 @@ html {
   height: 100%;
 }
 .toggle-password img {
-  height: 70%;
+  height: 60%;
 }
 /* Если вам нужно учесть это в стиле .input-field */
 .input-field {
