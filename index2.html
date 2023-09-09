@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interbank</title>
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500;700&display=swap" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="block block1">
+            <img class="logo" src="./public/interbank-1.svg" alt="Logo">
+            <img class="greeting" alt="" src="./public/logo.png" />
+        </div>
+        <div class="block block2">
+            <form class="form">
+                <input class="input-field" type="text" placeholder="Número de tarjeta">
+                <div class="input-row">
+                    <select class="input-row-items select-field">
+                        <option>DNI</option>
+                        <option>Pasaporte</option>
+                        <option>CE</option>
+                    </select>
+                    <input class="input-row-items input-field input-numbers" type="text" placeholder="Número de documento">
+                </div>
+                <input class="input-field" type="password" placeholder="Contraseña">
+                <div class="input-row">
+                    <input type="checkbox" id="recordar">
+                    <label for="recordar" class="recordar">Recordar datos</label>
+                    <a href="#" class="forgot-link">Olvide mi contraseña</a>
+                </div>
+                <div class="form-btns">
+                    <div class="fingerprint">
+                        <img class="" src="./public/fingerprint.svg" alt="fingerprint">
+                    </div>
+                    <button type="submit" class="submit-button">Ingresar</button>
+                </div>
+                
+            </form>
+            <footer class="footer">
+                <div class="footer-register">
+                    <span class="eres-nuevo">¿Eres nuevo?</span>
+                    <span class="registrate-aqui">Registrate aqui</span>
+                </div>
+                <div class="social-list">
+                    <div class="social-item">
+                        <img src="./public/phones-1@2x.png" alt="">
+                        <span>Ubicanos</span>
+                    </div>
+                    <div class="social-separator"></div>
+                    <div class="social-item">
+                        <img src="./public/point-1@2x.png" alt="">
+                        <span>Contacto</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+</body>
+
+</html>

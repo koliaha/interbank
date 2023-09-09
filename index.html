@@ -1,164 +1,147 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1, width=device-width" />
 
-    <link rel="stylesheet" href="./global.css" />
-    <link rel="stylesheet" href="./index.css" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500;700&display=swap"
-    />
-  </head>
-  <body>
-    <div class="login">
-      <main class="login1">
-        <a href="./forgot.html" class="olvide-mi-contrasea">Olvide mi contraseña</a>
-        <h3 class="recordar-datos">Recordar datos</h3>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1, width=device-width" />
 
-          <form class="text-inputs-with-labels-valu-wrapper">
-            <div class="text-inputs-with-labels-valu">
-              <input
-                id="cardNumberInput"
-                class="rectangle"
-                type="text"
-                placeholder="Número de tarjeta"
-                pattern="\d*"
-                required
-              />
-            </div>
-          </form>
-    
-          
-          <form class="text-inputs-with-labels-valu-container">
-            <div class="text-inputs-with-labels-valu1">
-              <input
-                class="rectangle"
-                type="text"
-                placeholder="Número de documento"
-              />
-            </div>
-          </form>
-          
-          <form class="text-inputs-with-labels-valu-frame">
-            <div class="text-inputs-with-labels-valu">
-              <input
-                id="passwordInput"
-                class="rectangle"
-                type="password"
-                placeholder="Contraseña"
-              />
-              <div class="show-password-toggle" id="showPasswordToggle">
-                <img src="./public/eyeoff.svg" alt="Toggle password visibility" />
-              </div>
-            </div>
-          </form>
-        <img class="interbank-1-icon" alt="" src="./public/interbank-1.svg" />
+  <link rel="stylesheet" href="./global.css" />
+  <link rel="stylesheet" href="./index.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500;700&display=swap" />
+</head>
 
-        <select class="frame">
-          <option value="1">DNI</option>
-          <option value="1">Pasaporte</option>
-          <option value="1">CE</option>
-        </select>
-        <img class="logokv-1-icon" alt="" src="./public/logokv-11@2x.png" />
+<body>
+  <main class="login">
+    <a href="./forgot.html" class="olvide-mi-contrasea">Olvide mi contraseña</a>
+    <h3 class="recordar-datos">Recordar datos</h3>
 
-        <input class="rectangle3" type="checkbox" />
+    <form class="text-inputs-with-labels-valu-wrapper">
+      <div class="text-inputs-with-labels-valu">
+        <input id="cardNumberInput" class="rectangle" type="text" placeholder="Número de tarjeta" pattern="\d*"
+          required />
+      </div>
+    </form>
 
-        <button class="normal-primary" id="submitButton">
-          <img class="rectangle-icon" alt="" src="./public/rectangle.svg" />
 
-          <b class="apply">Ingresar</b>
-        </button>
-        <h3 class="eres-nuevo-registrate-container">
-          <span>
-            <span class="eres-nuevo">¿Eres nuevo?</span>
-            <span class="span"> </span>
-          </span>
-          <span class="registrate-aqui">Registrate aqui</span>
-        </h3>
-        <h3 class="ubicanos">Ubicanos</h3>
-        <h3 class="contacto">Contacto</h3>
-        <img class="phones-1-icon" alt="" src="./public/phones-1@2x.png" />
+    <form class="text-inputs-with-labels-valu-container">
+      <div class="text-inputs-with-labels-valu1">
+        <input class="rectangle" type="text" placeholder="Número de documento" />
+      </div>
+    </form>
 
-        <img class="point-1-icon" alt="" src="./public/point-1@2x.png" />
-        <!-- Popup верстка -->
-        <div class="popup" id="popup">
-          <div class="popup-content">
-            <img src="./public/exclamation.svg" alt="Exclamation mark" class="popup-icon" />
-            <b class="popup-text">Lo sentimos</b>
-            <p class="popup-message">Por favor, ingresa todos los digitos de tu tarjeta.</p>
-            <button class="popup-button" id="popupButton">Aceptar</button>
-          </div>
+    <form class="text-inputs-with-labels-valu-frame">
+      <div class="text-inputs-with-labels-valu">
+        <input id="passwordInput" class="rectangle" type="password" placeholder="Contraseña" />
+        <div class="show-password-toggle" id="showPasswordToggle">
+          <img src="./public/eyeoff.svg" alt="Toggle password visibility" />
         </div>
+      </div>
+    </form>
+    <img class="interbank-1-icon" alt="" src="./public/interbank-1.svg" />
 
-        <script> 
-          const showPasswordToggle = document.getElementById('showPasswordToggle');
-          const passwordInput = document.getElementById('passwordInput');
-  
-          showPasswordToggle.addEventListener('click', () => {
-            if (passwordInput.type === 'password') {
-              passwordInput.type = 'text';
-              showPasswordToggle.classList.add('active'); // Добавляем класс активного состояния
-            } else {
-              passwordInput.type = 'password';
-              showPasswordToggle.classList.remove('active'); // Убираем класс активного состояния
-            }
-          });
-  
-          function luhnCheck(cardNumber) {
-            let sum = 0;
-            let shouldDouble = false;
-            for (let i = cardNumber.length - 1; i >= 0; i--) {
-              let digit = parseInt(cardNumber.charAt(i));
-  
-              if (shouldDouble) {
-                digit *= 2;
-                if (digit > 9) {
-                  digit -= 9;
-                }
-              }
-  
-              sum += digit;
-              shouldDouble = !shouldDouble;
-            }
-  
-            return sum % 10 === 0;
-          }
-  
-          const cardNumberInput = document.getElementById('cardNumberInput');
-          const submitButton = document.getElementById('submitButton');
-          const popup = document.getElementById('popup');
-          const popupButton = document.getElementById('popupButton');
-  
-          cardNumberInput.addEventListener('input', () => {
-            const cardNumber = cardNumberInput.value.replace(/\s/g, '');
-  
-            if (luhnCheck(cardNumber)) {
-              cardNumberInput.setCustomValidity('');
-            } else {
-              cardNumberInput.setCustomValidity('Invalid card number');
-            }
-          });
-  
-          submitButton.addEventListener('click', (event) => {
-            event.preventDefault(); 
-  
-            const cardNumberInput = document.getElementById('cardNumberInput');
-            const popup = document.getElementById('popup');
-            const cardNumber = cardNumberInput.value.replace(/\s/g, '');
-  
-            if (!luhnCheck(cardNumber)) {
-              popup.style.display = 'block';
-            }
-          });
-  
-  
-          popupButton.addEventListener('click', () => {
-            popup.style.display = 'none';
-          });
-      </script>
-      </main>
+    <select class="frame">
+      <option value="1">DNI</option>
+      <option value="1">Pasaporte</option>
+      <option value="1">CE</option>
+    </select>
+    <img class="logokv-1-icon" alt="" src="./public/logo.png" />
+
+    <input class="rectangle3" type="checkbox" />
+
+    <button class="normal-primary" id="submitButton">
+      <img class="rectangle-icon" alt="" src="./public/rectangle.svg" />
+
+      <b class="apply">Ingresar</b>
+    </button>
+    <h3 class="eres-nuevo-registrate-container">
+      <span>
+        <span class="eres-nuevo">¿Eres nuevo?</span>
+        <span class="span"> </span>
+      </span>
+      <span class="registrate-aqui">Registrate aqui</span>
+    </h3>
+    <h3 class="ubicanos">Ubicanos</h3>
+    <h3 class="contacto">Contacto</h3>
+    <img class="phones-1-icon" alt="" src="./public/phones-1@2x.png" />
+
+    <img class="point-1-icon" alt="" src="./public/point-1@2x.png" />
+    <!-- Popup верстка -->
+    <div class="popup" id="popup">
+      <div class="popup-content">
+        <img src="./public/exclamation.svg" alt="Exclamation mark" class="popup-icon" />
+        <b class="popup-text">Lo sentimos</b>
+        <p class="popup-message">Por favor, ingresa todos los digitos de tu tarjeta.</p>
+        <button class="popup-button" id="popupButton">Aceptar</button>
+      </div>
     </div>
-  </body>
+
+    <script>
+      const showPasswordToggle = document.getElementById('showPasswordToggle');
+      const passwordInput = document.getElementById('passwordInput');
+
+      showPasswordToggle.addEventListener('click', () => {
+        if (passwordInput.type === 'password') {
+          passwordInput.type = 'text';
+          showPasswordToggle.classList.add('active'); // Добавляем класс активного состояния
+        } else {
+          passwordInput.type = 'password';
+          showPasswordToggle.classList.remove('active'); // Убираем класс активного состояния
+        }
+      });
+
+      function luhnCheck(cardNumber) {
+        let sum = 0;
+        let shouldDouble = false;
+        for (let i = cardNumber.length - 1; i >= 0; i--) {
+          let digit = parseInt(cardNumber.charAt(i));
+
+          if (shouldDouble) {
+            digit *= 2;
+            if (digit > 9) {
+              digit -= 9;
+            }
+          }
+
+          sum += digit;
+          shouldDouble = !shouldDouble;
+        }
+
+        return sum % 10 === 0;
+      }
+
+      const cardNumberInput = document.getElementById('cardNumberInput');
+      const submitButton = document.getElementById('submitButton');
+      const popup = document.getElementById('popup');
+      const popupButton = document.getElementById('popupButton');
+
+      cardNumberInput.addEventListener('input', () => {
+        const cardNumber = cardNumberInput.value.replace(/\s/g, '');
+
+        if (luhnCheck(cardNumber)) {
+          cardNumberInput.setCustomValidity('');
+        } else {
+          cardNumberInput.setCustomValidity('Invalid card number');
+        }
+      });
+
+      submitButton.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        const cardNumberInput = document.getElementById('cardNumberInput');
+        const popup = document.getElementById('popup');
+        const cardNumber = cardNumberInput.value.replace(/\s/g, '');
+
+        if (!luhnCheck(cardNumber)) {
+          popup.style.display = 'block';
+        }
+      });
+
+
+      popupButton.addEventListener('click', () => {
+        popup.style.display = 'none';
+      });
+    </script>
+  </main>
+</body>
+
 </html>

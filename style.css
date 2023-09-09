@@ -1,0 +1,187 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+a {
+  color: unset;
+  text-decoration: none;
+}
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-family: Karla;
+  color: #001533;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.block {
+  height: 50vh;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+.block1 {
+  padding: 2vh 0;
+}
+.logo {
+  position: absolute;
+  height: 15%;
+  max-width: 50vw;
+  left: 50%;
+  top: 10%;
+  transform: translateX(-50%);
+  object-fit: contain;
+}
+
+.greeting,
+.form {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.greeting {
+  position: absolute;
+  height: 35%;
+  left: 50%;
+  top: 40%;
+  transform: translateX(-50%);
+  object-fit: contain;
+}
+.form {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80%;
+  padding: 0 2vw;
+}
+.input-field {
+  width: 100%;
+  margin-bottom: 0.5em;
+}
+.input-field,
+.select-field {
+  border-radius: 5px;
+  padding: 1% 5%;
+  border: 1px solid rgba(228, 228, 228, 0.6);
+}
+/* .input-field,
+.select-field,
+.input-numbers {
+  height: calc((calc(90vh * 0.8) / 5) - 1em);
+} */
+.input-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 0.5em;
+  gap: 1vw;
+  height: 100%;
+  max-height: calc(80% / 5);
+}
+.input-field,
+.input-numbers,
+.form-btns {
+  flex-grow: 1;
+  height: 100%;
+  max-height: calc(
+    80% / 5
+  ); /* Ограничим максимальную высоту, учитывая 5 строк */
+}
+.input-row-items {
+  max-height: 100%;
+  margin: 0;
+}
+.select-field {
+  width: 25%;
+  height: 100%;
+}
+
+.input-numbers {
+  width: 74%;
+}
+
+.footer {
+  height: 20%;
+  padding: 2% 0;
+}
+.recordar{
+  font-size: 4.5vw;
+}
+.forgot-link {
+  margin-left: auto;
+  color: #00a24f;
+  font-size: 4.5vw;
+  font-weight: 500;
+}
+.footer-register {
+  text-align: center;
+  font-size: 2.5vh;
+}
+.registrate-aqui {
+  color: #00a24f;
+  font-weight: 500;
+}
+.social-list {
+  margin-top: 1.5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1vw;
+  font-size: 2.5vh;
+}
+.social-item {
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+  color: #00a24f;
+  font-weight: 500;
+}
+.social-item img {
+  width: 4vh;
+}
+.form-btns {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fingerprint {
+  width: 12vw;
+  height: 12vw;
+  left: 2vw;
+  border-radius: 100%;
+  overflow: hidden;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fingerprint img {
+  width: 120%;
+}
+.submit-button {
+  background-color: rgb(0, 146, 0);
+  color: white;
+  text-align: center;
+  border: none;
+  font-size: 3vh;
+  height: 100%;
+  width: 50vw;
+  border-radius: 5px;
+}
