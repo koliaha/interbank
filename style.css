@@ -13,6 +13,8 @@ html {
   padding: 0;
   font-family: Karla;
   color: #001533;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 .container {
@@ -20,6 +22,7 @@ html {
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
+  position: relative;
 }
 
 .block {
@@ -70,12 +73,13 @@ html {
 .input-field {
   width: 100%;
   margin-bottom: 0.5em;
+  font-size: 2vh;
 }
 .input-field,
 .select-field {
   border-radius: 5px;
   padding: 1% 5%;
-  border: 1px solid rgba(228, 228, 228, 0.6);
+  border: 1px solid #d9d9d9;
 }
 /* .input-field,
 .select-field,
@@ -94,6 +98,7 @@ html {
 }
 .input-field,
 .input-numbers,
+.password-wrapper,
 .form-btns {
   flex-grow: 1;
   height: 100%;
@@ -101,6 +106,7 @@ html {
     80% / 5
   ); /* Ограничим максимальную высоту, учитывая 5 строк */
 }
+
 .input-row-items {
   max-height: 100%;
   margin: 0;
@@ -113,12 +119,39 @@ html {
 .input-numbers {
   width: 74%;
 }
+.password-wrapper {
+  position: relative;
+  width: 100%;
+}
+.password-wrapper .input-field {
+  width: 100%;
+  max-height: 100%;
+  padding-right: 15vw;
+}
+.toggle-password {
+  position: absolute;
+  right: 5vw;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 1.2em;
+  height: 100%;
+}
+.toggle-password img {
+  height: 70%;
+}
+/* Если вам нужно учесть это в стиле .input-field */
+.input-field {
+  padding-right: 40px; /* дает место для значка внутри поля ввода */
+}
 
 .footer {
   height: 20%;
   padding: 2% 0;
 }
-.recordar{
+.recordar {
   font-size: 4.5vw;
 }
 .forgot-link {
@@ -129,7 +162,7 @@ html {
 }
 .footer-register {
   text-align: center;
-  font-size: 2.5vh;
+  font-size: 2vh;
 }
 .registrate-aqui {
   color: #00a24f;
@@ -140,8 +173,13 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1vw;
-  font-size: 2.5vh;
+  gap: 4vw;
+  font-size: 2vh;
+}
+.social-separator {
+  width: 1px;
+  height: 30px;
+  background-color: #d9d9d9;
 }
 .social-item {
   display: flex;
@@ -151,7 +189,7 @@ html {
   font-weight: 500;
 }
 .social-item img {
-  width: 4vh;
+  width: 3vh;
 }
 .form-btns {
   position: relative;
@@ -176,7 +214,7 @@ html {
   width: 120%;
 }
 .submit-button {
-  background-color: rgb(0, 146, 0);
+  background-color: #2e9b18;
   color: white;
   text-align: center;
   border: none;
@@ -184,4 +222,52 @@ html {
   height: 100%;
   width: 50vw;
   border-radius: 5px;
+}
+.forget-form {
+  background-color: white;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+  transition: top 0.3s ease-in-out;
+}
+.forget-form-header {
+  text-align: center;
+  position: relative;
+  font-weight: 600;
+  padding: 3%;
+  font-size: 2.2vh;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 3px 15px 0px;
+}
+.back-icon {
+  position: absolute;
+  width: 5vw;
+  left: 5%;
+}
+.forget-form .form {
+  height: 30%;
+}
+.forget-form-text {
+  text-align: left;
+  width: 100%;
+  font-size: 2.5vh;
+  margin-bottom: 3%;
+}
+.forget-form-btn {
+  position: absolute;
+  bottom: 5%;
+  height: auto;
+  padding: 3% 2%;
+  text-transform: uppercase;
+  font-size: 3.5vw;
+  font-weight: bold;
+  width: 95%;
+}
+.forget-form-btn:disabled {
+  background: #eceeed;
+}
+.openup {
+  top: 200% !important;
 }

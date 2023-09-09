@@ -11,6 +11,26 @@
 
 <body>
     <div class="container">
+        <!--  -->
+        <div class="forget-form openup">
+            <div class="forget-form-header">
+                <img class="back-icon" alt="" src="./public/vuesaxlineararrowdown.svg">
+                Olvide mi contraseña
+            </div>
+            <form class="form">
+                <p class="forget-form-text">Por favor, ingresa tus datos:</p>
+                <input class="input-field" type="text" placeholder="Número de tarjeta">
+                <div class="input-row">
+                    <select class="input-row-items select-field">
+                        <option>DNI</option>
+                        <option>Pasaporte</option>
+                        <option>CE</option>
+                    </select>
+                    <input class="input-row-items input-field input-numbers" type="number" placeholder="№ de documento">
+                </div>
+                <button class="submit-button forget-form-btn" type="submit" disabled>siguiente</button>
+            </form>
+        </div>
         <div class="block block1">
             <img class="logo" src="./public/interbank-1.svg" alt="Logo">
             <img class="greeting" alt="" src="./public/logo.png" />
@@ -24,13 +44,20 @@
                         <option>Pasaporte</option>
                         <option>CE</option>
                     </select>
-                    <input class="input-row-items input-field input-numbers" type="text" placeholder="Número de documento">
+                    <input class="input-row-items input-field input-numbers" type="number" placeholder="Número de documento">
                 </div>
-                <input class="input-field" type="password" placeholder="Contraseña">
+                <div class="password-wrapper">
+                    <input class="input-field" id="password" type="password" placeholder="Contraseña">
+                    <button type="button" id="toggle-password" class="toggle-password">
+                        <img id="eye-icon" src="./public/eyeoff.svg" alt="toggle visibility">
+                    </button>
+                </div>
+
+                <!-- <input class="input-field" type="password" placeholder="Contraseña"> -->
                 <div class="input-row">
                     <input type="checkbox" id="recordar">
                     <label for="recordar" class="recordar">Recordar datos</label>
-                    <a href="#" class="forgot-link">Olvide mi contraseña</a>
+                    <span class="forgot-link">Olvide mi contraseña</span>
                 </div>
                 <div class="form-btns">
                     <div class="fingerprint">
@@ -38,7 +65,6 @@
                     </div>
                     <button type="submit" class="submit-button">Ingresar</button>
                 </div>
-                
             </form>
             <footer class="footer">
                 <div class="footer-register">
@@ -47,19 +73,43 @@
                 </div>
                 <div class="social-list">
                     <div class="social-item">
-                        <img src="./public/phones-1@2x.png" alt="">
+                        <img src="./public/point-1@2x.png" alt="">
                         <span>Ubicanos</span>
                     </div>
                     <div class="social-separator"></div>
                     <div class="social-item">
-                        <img src="./public/point-1@2x.png" alt="">
+                        <img src="./public/phones-1@2x.png" alt="">
                         <span>Contacto</span>
                     </div>
                 </div>
             </footer>
         </div>
     </div>
+    <script>
+        const forgotLink = document.querySelector('.forgot-link')
+        const backIcon = document.querySelector('.back-icon')
+        const openbankElement = document.querySelector('.forget-form');
+        forgotLink.addEventListener('click', () => {
+            openbankElement.classList.remove('openup')
+        })
+        backIcon.addEventListener('click', () => {
+            openbankElement.classList.add('openup')
+        })
+        const togglePasswordButton = document.getElementById('toggle-password');
+        const passwordInput = document.getElementById('password');
+        const eyeIcon = document.getElementById('eye-icon');
 
+        togglePasswordButton.addEventListener('click', function () {
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.src = './public/eye.svg';
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.src = './public/eyeoff.svg';
+            }
+        });
+
+    </script>
 </body>
 
 </html>
