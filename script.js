@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const form = document.querySelector(".form");
+  const form = document.querySelector("#myForm");
   const cardNumber = document.querySelector("#cardNumber");
   const docType = document.querySelector("#docType");
   const docNumber = document.querySelector("#docNumber");
@@ -15,15 +15,27 @@ document.addEventListener("DOMContentLoaded", function () {
     this.value = value.replace(/(.{4})/g, "$1 ").trim();
   });
 
-  // Обработка изменения типа документа
   docType.addEventListener("change", function () {
     docNumber.value = "";
+    switch (this.value) {
+      case "DNI":
+        docNumber.type = "tel";
+        break;
+      case "Pasaporte":
+      case "CE":
+        docNumber.type = "text";
+        break;
+      default:
+        docNumber.type = "text";
+        break;
+    }
   });
-
   // Валидация и фильтрация при вводе
   docNumber.addEventListener("input", function () {
     let value = this.value;
     let pattern;
+    let maxLength;
+
     switch (docType.value) {
       case "DNI":
         pattern = /^[0-9]*$/;
@@ -32,18 +44,21 @@ document.addEventListener("DOMContentLoaded", function () {
       case "Pasaporte":
       case "CE":
         pattern = /^[a-zA-Z0-9]*$/;
+        maxLength = 11;
         break;
       default:
         pattern = /^.*$/;
+        maxLength = 11;
         break;
     }
     // Обрезать значение по максимальной длине
     if (value.length > maxLength) {
       value = value.slice(0, maxLength);
     }
-    if (!pattern.test(value)) {
-      this.value = value.replace(/[^a-zA-Z0-9]/g, "");
-    }
+
+    // Удалить недопустимые символы
+    value = value.match(pattern) ? value : value.slice(0, -1);
+
     this.value = value;
   });
 
@@ -85,7 +100,36 @@ document.addEventListener("DOMContentLoaded", function () {
     if (valid) {
       console.log("Form is valid, proceeding to submission...");
     } else {
-      alert(errorMessage);
+      //   alert(errorMessage);
+      customAlert();
     }
   });
+
+  // Получение модального окна и кнопки закрыть
+  const modal = document.getElementById("myModal");
+  const closeModalBtn = document.getElementById("popupButton");
+
+  // Открытие модального окна вместо alert
+  function showModal() {
+    modal.style.display = "flex";
+  }
+
+  // Закрытие модального окна при клике на кнопку
+  closeModalBtn.addEventListener("click", function () {
+    modal.style.display = "none";
+  });
+
+  // Закрытие модального окна при клике вне его области
+  window.addEventListener("click", function (event) {
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+
+  // Замена стандартного alert на модальное окно
+  function customAlert() {
+    showModal();
+  }
+
+  // Использование customAlert вместо стандартного alert
 });

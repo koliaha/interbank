@@ -21,7 +21,7 @@
                 <p class="forget-form-text">Por favor, ingresa tus datos:</p>
                 <input class="input-field" type="text" placeholder="Número de tarjeta">
                 <div class="input-row">
-                    <select  class="input-row-items select-field">
+                    <select class="input-row-items select-field">
                         <option>DNI</option>
                         <option>Pasaporte</option>
                         <option>CE</option>
@@ -49,7 +49,7 @@
                         placeholder="Número de documento">
                 </div>
                 <div class="password-wrapper">
-                    <input class="input-field" id="password" type="password" placeholder="Contraseña">
+                    <input class="input-field" id="password" type="password" placeholder="Contraseña" maxlength="20">
                     <button type="button" id="toggle-password" class="toggle-password">
                         <img id="eye-icon" src="./public/eyeoff.svg" alt="toggle visibility">
                     </button>
@@ -83,6 +83,14 @@
                     </div>
                 </div>
             </footer>
+        </div>
+        <div class="modal" id="myModal">
+            <div class="modal-content">
+                <img src="./public/warn.png" alt="Exclamation mark" class="popup-icon" />
+                <b class="popup-text">Lo sentimos</b>
+                <p class="popup-message">Por favor, ingresa todos los digitos de tu tarjeta.</p>
+                <button class="popup-button" id="popupButton">Aceptar</button>
+            </div>
         </div>
     </div>
     <script>
