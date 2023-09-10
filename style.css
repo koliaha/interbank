@@ -52,6 +52,9 @@ html {
 .block1 {
   padding: 2vh 0;
 }
+.block2{
+  min-height: 357px;
+}
 .logo {
   position: absolute;
   height: 10%;
@@ -92,6 +95,7 @@ html {
 }
 .input-field,
 .select-field {
+  min-height: 50px;
   -webkit-appearance: none; /* Отключение нативной стилизации на WebKit браузерах */
   -moz-appearance: none; /* Отключение нативной стилизации на Firefox */
   appearance: none;
@@ -272,6 +276,7 @@ html {
   left: 5%;
 }
 .forget-form .form {
+  min-height: 190px;
   height: 30%;
 }
 .forget-form-text {
