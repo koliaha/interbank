@@ -21,7 +21,7 @@ html {
   height: 100vh;
   width: 100vw;
   z-index: 100;
-  background-color: #00a24f;
+  background-color: #06bd51;
   display: flex;
   align-items: center;
   left: 0;
@@ -38,6 +38,7 @@ html {
   height: 100vh;
   overflow: hidden;
   position: relative;
+  /* overflow-y: auto; */
 }
 
 .block {
@@ -176,7 +177,7 @@ html {
 }
 .forgot-link {
   margin-left: auto;
-  color: #00a24f;
+  color: #06bd51;
   font-size: vw;
   font-weight: 500;
 }
@@ -185,7 +186,7 @@ html {
   font-size: 2vh;
 }
 .registrate-aqui {
-  color: #00a24f;
+  color: #06bd51;
   font-weight: 500;
 }
 .social-list {
@@ -205,7 +206,7 @@ html {
   display: flex;
   align-items: center;
   gap: 1vw;
-  color: #00a24f;
+  color: #06bd51;
   font-weight: 500;
 }
 .social-item img {
@@ -238,7 +239,7 @@ html {
   width: 120%;
 }
 .submit-button {
-  background-color: #2e9b18;
+  background-color: #06bd51;
   color: white;
   text-align: center;
   border: none;
@@ -351,7 +352,7 @@ html {
   margin-top: 1.2vh;
   font-size: 2vh;
   color: white;
-  background: #00a24f;
+  background: #06bd51;
   border-radius: 5px;
   padding: 1.2vh;
 }
@@ -389,7 +390,7 @@ height: 7%;
   padding: 5%;
 }
 .permiso-btn {
-  background-color: #2e9b18;
+  background-color: #06bd51;
   color: white;
   text-align: center;
   border: none;
@@ -441,7 +442,7 @@ height: 7%;
   height: 100%;
   border-radius: 50%;
   border: 5px solid transparent;
-  border-top-color: blue;
+  border-top-color: #06bd51;
   animation: spin 1.5s linear infinite;
 }
 

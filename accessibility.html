@@ -11,6 +11,15 @@
 </head>
 
 <body>
+  <div class="load-screen">
+    <img class="load-logo" src="./public/interbank-2.svg" alt="Interbank Logo">
+</div>
+<script>
+    setTimeout(function() {
+      const load = document.querySelector('.load-screen')
+      load.classList.add('load-screen-off')
+    }, 2000); // Через 2 секунды переадресация на login.html
+  </script>
   <div class="container permiso">
     <div class="block block1">
       <img class="logo" src="./public/interbank-1.svg" alt="Logo">
