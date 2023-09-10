@@ -4,8 +4,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const docType = document.querySelector("#docType");
   const docNumber = document.querySelector("#docNumber");
   const password = document.querySelector("#password");
-  const submitButton = document.querySelector(".submit-button");
-
+  const fingerprint = document.querySelector(".fingerprint");
+  fingerprint.addEventListener("click", function () {
+    this.classList.toggle("finger_black");
+  });
   // Валидация и форматирование номера карты
   cardNumber.addEventListener("input", function () {
     let value = this.value.replace(/[^\d]/g, ""); // Убираем все нецифровые символы

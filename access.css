@@ -19,20 +19,7 @@
   height: 180px;
   overflow: hidden;
 }
-.permiso1 {
-  margin: 0;
-  position: absolute;
-  top: calc(50% - 361px);
-  left: calc(50% - 35px);
-  font-size: var(--font-size-lg);
-  line-height: 150.6%;
-  font-weight: 500;
-  font-family: inherit;
-  text-align: left;
-  display: inline-block;
-  width: 70px;
-  height: 23px;
-}
+
 .rectangle-icon {
   position: absolute;
   height: 100%;
@@ -66,14 +53,14 @@
   border: 0;
   padding: 0;
   background-color: transparent;
-  position: absolute;
   top: calc(50% + 288px);
   left: calc(50% - 140px);
-  box-shadow: 0 4px 4px rgba(50, 50, 71, 0.08), 0 4px 8px rgba(50, 50, 71, 0.06);
+  /* box-shadow: 0 4px 4px rgba(50, 50, 71, 0.08), 0 4px 8px rgba(50, 50, 71, 0.06); */
   width: 281px;
   height: 50px;
 }
 .permiso {
+
   position: relative;
   background-color: var(--colors-neutral-white);
   width: 100%;

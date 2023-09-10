@@ -214,6 +214,10 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: 1s;
+}
+.finger_black {
+  filter: grayscale(100%);
 }
 .fingerprint img {
   width: 120%;
@@ -335,4 +339,35 @@ html {
   background: #00a24f;
   border-radius: 5px;
   padding: 1.2vh;
+}
+.permiso {
+  text-align: center;
+}
+.permiso-title {
+  font-size: 3.5vh;
+  margin-top: 3%;
+}
+.permiso-img {
+  position: absolute;
+  height: 45%;
+  left: 50%;
+  top: 40%;
+  transform: translateX(-50%);
+  object-fit: contain;
+}
+.permiso-text {
+  padding: 3% 5%;
+  font-weight: normal;
+  font-size: 2.5vh;
+}
+.permiso-btn {
+  background-color: #2e9b18;
+  color: white;
+  text-align: center;
+  border: none;
+  font-size: 2.5vh;
+  width: 50vw;
+  border-radius: 5px;
+  padding: 4% 5%;
+  margin-top: 3%;
 }
