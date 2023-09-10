@@ -15,7 +15,6 @@ html {
   color: #001533;
   max-width: 500px;
   margin: 0 auto;
-
 }
 .load-screen {
   position: fixed;
@@ -28,9 +27,9 @@ html {
   left: 0;
   top: 0;
   justify-content: center;
-  transition: 1.3s left;
+  transition: 0.3s left;
 }
-.load-screen-off{
+.load-screen-off {
   left: -100%;
 }
 .container {
@@ -54,7 +53,7 @@ html {
 }
 .logo {
   position: absolute;
-  height: 15%;
+  height: 10%;
   max-width: 50vw;
   left: 50%;
   top: 10%;
@@ -84,7 +83,7 @@ html {
   align-items: center;
   justify-content: center;
   height: 80%;
-  padding: 0 2vw;
+  padding: 0 2.5vw;
 }
 .input-field {
   width: 100%;
@@ -101,12 +100,10 @@ html {
   background: white;
   color: black;
   font-size: 2vh;
+  transition: 0.3s;
+  outline: none;
 }
-/* .input-field,
-.select-field,
-.input-numbers {
-  height: calc((calc(90vh * 0.8) / 5) - 1em);
-} */
+
 .input-row {
   display: flex;
   justify-content: space-between;
@@ -115,7 +112,7 @@ html {
   margin-bottom: 0.5em;
   gap: 1vw;
   height: 100%;
-  max-height: calc(80% / 5);
+  max-height: calc(70% / 5);
 }
 .input-field,
 .input-numbers,
@@ -123,9 +120,7 @@ html {
 .form-btns {
   flex-grow: 1;
   height: 100%;
-  max-height: calc(
-    80% / 5
-  ); /* Ограничим максимальную высоту, учитывая 5 строк */
+  max-height: calc(70% / 5);
 }
 
 .input-row-items {
@@ -135,6 +130,10 @@ html {
 .select-field {
   width: 25%;
   height: 100%;
+  background-image: url("./public/down-arrow-svgrepo-com.svg");
+  background-position: 90% center;
+  background-repeat: no-repeat;
+  background-size: auto 15px;
 }
 
 .input-numbers {
@@ -173,12 +172,12 @@ html {
   padding: 2% 0;
 }
 .recordar {
-  font-size: 4.5vw;
+  font-size: 4vw;
 }
 .forgot-link {
   margin-left: auto;
   color: #00a24f;
-  font-size: 4.5vw;
+  font-size: vw;
   font-weight: 500;
 }
 .footer-register {
@@ -233,7 +232,7 @@ html {
   transition: 1s;
 }
 .finger_black {
-  filter: grayscale(100%);
+  filter: grayscale(80%);
 }
 .fingerprint img {
   width: 120%;
@@ -359,13 +358,19 @@ html {
 .permiso {
   text-align: center;
 }
+.permiso .logo{
+height: 7%;
+}
 .permiso-title {
   font-size: 3.5vh;
-  margin-top: 3%;
+  position: absolute;
+  left: 50%;
+  top: 28%;
+  transform: translateX(-50%);
 }
 .permiso-img {
   position: absolute;
-  height: 45%;
+  height: 30%;
   left: 50%;
   top: 40%;
   transform: translateX(-50%);
@@ -375,6 +380,13 @@ html {
   padding: 3% 5%;
   font-weight: normal;
   font-size: 2.5vh;
+}
+.permiso-block-2{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5%;
 }
 .permiso-btn {
   background-color: #2e9b18;
@@ -440,4 +452,8 @@ html {
   100% {
     transform: rotate(360deg);
   }
+}
+.green-border,
+.focus-green-border:focus {
+  border: 2px solid green !important;
 }
