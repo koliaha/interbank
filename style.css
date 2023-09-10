@@ -75,10 +75,16 @@ html {
 .greeting {
   position: absolute;
   height: 35%;
+  /* min-height: 156px; */
   left: 50%;
   top: 40%;
   transform: translateX(-50%);
   object-fit: contain;
+}
+@media screen and (max-height:520px){
+  .greeting{
+    height: 60%;
+  }
 }
 .form {
   flex-grow: 1;
@@ -104,13 +110,14 @@ html {
   border: 1px solid #d9d9d9;
   background: white;
   color: black;
-  font-size: 2vh;
+  font-size: 4vw;
   transition: 0.3s;
   outline: none;
 }
 
 .input-row {
   display: flex;
+  min-height: 50px;
   justify-content: space-between;
   align-items: center;
   width: 100%;
@@ -146,6 +153,9 @@ html {
 }
 .password-wrapper {
   position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 50px;
   width: 100%;
 }
 .password-wrapper .input-field {
