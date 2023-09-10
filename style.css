@@ -36,9 +36,9 @@ html {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  overflow: hidden;
+  /* overflow: hidden; */
   position: relative;
-  /* overflow-y: auto; */
+  overflow-y: auto
 }
 
 .block {
@@ -265,12 +265,13 @@ html {
 .forget-form {
   background-color: white;
   position: absolute;
-  top: 0;
+  top: 100%;
   left: 0;
   width: 100vw;
   height: 100vh;
   z-index: 100;
   transition: top 0.3s ease-in-out;
+  display: none
 }
 .forget-form-header {
   text-align: center;
@@ -310,6 +311,7 @@ html {
 }
 
 .openup {
+  display: none;
   top: 200% !important;
 }
 
