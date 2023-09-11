@@ -338,7 +338,8 @@ html {
   margin: auto;
   padding: 20px;
   width: 80%;
-  max-height: 50vh;
+  justify-content: space-between;
+  min-height: 205px;
   background-color: white;
   border-radius: 15px;
   display: flex;
@@ -361,21 +362,21 @@ html {
 }
 .popup-text {
   margin-top: 2vh;
-  font-size: 2.5vh;
+  font-size: 2.5vw;
 }
 .popup-message {
   margin-top: 0.5vh;
-  font-size: 2vh;
+  font-size: 2.4vw;
 }
 .popup-button {
   width: 100%;
   border: none;
   margin-top: 1.2vh;
-  font-size: 2vh;
+  font-size: 2vw;
   color: white;
   background: #06bd51;
   border-radius: 5px;
-  padding: 1.2vh;
+  padding: 1.2vw;
 }
 
 
@@ -482,6 +483,7 @@ height: 7%;
   border: 2px solid green !important;
 }
 .btn-active{
+  outline: none;
   transition: background-color 0.3s ease, transform 0.3s ease; /* Добавим анимацию */
 }
 /* Изменение цвета при наведении */
